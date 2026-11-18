@@ -29,15 +29,15 @@ export interface ContactConfig {
 
 export const contact: ContactConfig = {
   whatsapp: {
-    number: null, // PLACEHOLDER — informar WhatsApp comercial
-    display: null, // PLACEHOLDER
+    number: '5569993539978',
+    display: '(69) 99353-9978',
     defaultMessage: 'Olá! Gostaria de conhecer as soluções da LVG Sistemas e Automações.',
   },
-  email: null, // PLACEHOLDER — informar e-mail comercial
+  email: null, // PENDENTE — informar e-mail comercial quando estiver configurado
   instagram: {
-    handle: null, // PLACEHOLDER — informar perfil do Instagram
+    handle: 'lvgsistemas',
   },
-  serviceArea: null, // PLACEHOLDER — informar região de atendimento
-  businessHours: null, // PLACEHOLDER — informar horário de atendimento
+  serviceArea: 'Atendimento remoto para todo o Brasil',
+  businessHours: 'Segunda a sexta, das 8h às 18h',
   cnpj: null, // Opcional
 }

@@ -5,12 +5,15 @@
 
 const PLACEHOLDER_SITE_URL = 'https://www.example.com'
 
+/** Domínio oficial do site. */
+const DEFAULT_SITE_URL = 'https://www.lvgsistemas.com.br'
+
 /**
  * URL pública do site (sem barra final).
- * Defina VITE_SITE_URL no ambiente de build (ex.: Cloudflare Pages) quando o domínio for definido.
+ * Usa o domínio oficial; pode ser sobrescrita pela variável VITE_SITE_URL no build.
  * Ela é usada em links canônicos, Open Graph, sitemap.xml e robots.txt.
  */
-const siteUrl = (import.meta.env.VITE_SITE_URL || PLACEHOLDER_SITE_URL).replace(/\/+$/, '')
+const siteUrl = (import.meta.env.VITE_SITE_URL || DEFAULT_SITE_URL).replace(/\/+$/, '')
 
 export const site = {
   name: 'LVG Sistemas e Automações',
@@ -20,7 +23,7 @@ export const site = {
   description:
     'A LVG Sistemas e Automações desenvolve sistemas de gestão SaaS e automações empresariais que tornam os processos mais simples, organizados e eficientes.',
   url: siteUrl,
-  /** true enquanto o domínio definitivo não for configurado. */
+  /** true se o domínio provisório estiver em uso. */
   isPlaceholderUrl: siteUrl === PLACEHOLDER_SITE_URL,
   locale: 'pt_BR',
   language: 'pt-BR',
