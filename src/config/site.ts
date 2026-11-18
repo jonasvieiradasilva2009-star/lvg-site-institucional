@@ -6,7 +6,7 @@
 const PLACEHOLDER_SITE_URL = 'https://www.example.com'
 
 /** Domínio oficial do site. */
-const DEFAULT_SITE_URL = 'https://www.lvgsistemas.com.br'
+const DEFAULT_SITE_URL = 'https://lvgsistemas.com.br'
 
 /**
  * URL pública do site (sem barra final).
