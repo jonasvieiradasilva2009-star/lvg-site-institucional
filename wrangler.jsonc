@@ -1,0 +1,15 @@
+// Configuração de publicação na Cloudflare (Workers com arquivos estáticos).
+// O build (`npm run build`) gera a pasta `dist`; o `npx wrangler deploy` publica esse conteúdo.
+// https://developers.cloudflare.com/workers/static-assets/
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "lvg-site-institucional",
+  "compatibility_date": "2025-09-01",
+  "assets": {
+    "directory": "./dist",
+    // /sobre serve sobre.html e /sobre/ redireciona para /sobre
+    "html_handling": "drop-trailing-slash",
+    // endereços inexistentes recebem dist/404.html com status 404
+    "not_found_handling": "404-page"
+  }
+}

@@ -17,7 +17,7 @@ navega como SPA.
 - [Como adicionar um novo SaaS](#como-adicionar-um-novo-saas)
 - [Como substituir a logo](#como-substituir-a-logo)
 - [Como configurar o domínio](#como-configurar-o-domínio)
-- [Como publicar no Cloudflare Pages](#como-publicar-no-cloudflare-pages)
+- [Como publicar na Cloudflare](#como-publicar-na-cloudflare)
 - [SEO, acessibilidade e segurança](#seo-acessibilidade-e-segurança)
 - [Pendências antes da publicação](#pendências-antes-da-publicação)
 
@@ -189,9 +189,32 @@ A logo é exibida pelo componente `src/components/brand/Logo.tsx`, que lê os ca
 4. Após publicar, cadastre o site no [Google Search Console](https://search.google.com/search-console) e envie
    `https://www.seudominio.com.br/sitemap.xml`.
 
-## Como publicar no Cloudflare Pages
+## Como publicar na Cloudflare
 
-### Opção A — integração com GitHub (recomendada)
+O projeto funciona tanto como **Worker com arquivos estáticos** (configurado em `wrangler.jsonc`) quanto como
+**Pages**. Use a opção correspondente ao tipo de projeto criado no painel.
+
+### Worker com arquivos estáticos (Workers Builds)
+
+Configuração em *Settings → Build* do Worker:
+
+- **Build command:** `npm run build`
+- **Deploy command:** `npx wrangler deploy`
+- **Variáveis de build:** `VITE_SITE_URL=https://www.seudominio.com.br` (e, se necessário, `NODE_VERSION=22`)
+
+O `wrangler.jsonc` publica a pasta `dist`, serve `/sobre` a partir de `sobre.html`, redireciona `/sobre/` para
+`/sobre` e responde `404.html` com status 404 para endereços inexistentes. Os arquivos `_headers` também são aplicados.
+
+Para testar localmente exatamente como na Cloudflare:
+
+```bash
+npm run build
+npx wrangler dev
+```
+
+### Pages
+
+#### Opção A — integração com GitHub (recomendada)
 
 1. Envie este projeto para um repositório no GitHub:
    ```bash
@@ -207,16 +230,17 @@ A logo é exibida pelo componente `src/components/brand/Logo.tsx`, que lê os ca
 4. Salve e faça o deploy. Cada push na branch principal publica automaticamente; outras branches geram
    URLs de pré-visualização.
 
-### Opção B — upload direto pela linha de comando
+#### Opção B — upload direto pela linha de comando
 
 ```bash
 npm run build
 npx wrangler pages deploy dist --project-name lvg-site
 ```
 
-### Comportamento esperado no Cloudflare Pages
+### Comportamento esperado
 
 - `/solucoes` é servido a partir de `solucoes.html` (URLs sem extensão e sem barra final).
+- `/sobre/` redireciona para `/sobre`.
 - Endereços inexistentes recebem `404.html` com status HTTP 404.
 - `public/_headers` aplica cabeçalhos de segurança (CSP, HSTS, X-Frame-Options, etc.) e cache longo para `/assets/*`.
   Se for adicionar serviços externos (ex.: analytics, chat, mapas), inclua os domínios correspondentes na
