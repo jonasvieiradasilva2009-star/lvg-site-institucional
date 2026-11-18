@@ -38,12 +38,15 @@ describe('rotas', () => {
     expect(screen.getAllByRole('link', { name: /Fale com a LVG/ })[0]).toHaveAttribute('href', '/contato')
   })
 
-  it('a página de contato não exibe links falsos enquanto os dados são placeholders', () => {
+  it('a página de contato usa os dados configurados e não cria links para dados pendentes', () => {
     const { container } = renderAt('/contato?interesse=frotas')
-    expect(container.querySelector('a[href^="https://wa.me"]')).toBeNull()
+    const whatsapp = container.querySelector<HTMLAnchorElement>('main a[href^="https://wa.me/5569993539978"]')
+    expect(whatsapp).not.toBeNull()
+    expect(decodeURIComponent(whatsapp!.href)).toContain('LVG Frotas')
+    expect(container.querySelector('main a[href="https://www.instagram.com/lvgsistemas/"]')).not.toBeNull()
     expect(container.querySelector('a[href^="mailto:"]')).toBeNull()
     expect(container.querySelector('form')).toBeNull()
-    expect(screen.getAllByText('Canal em configuração')).toHaveLength(3)
+    expect(screen.getAllByText('Canal em configuração')).toHaveLength(1)
     expect(screen.getByRole('button', { name: 'LVG Frotas' })).toHaveAttribute('aria-pressed', 'true')
   })
 
