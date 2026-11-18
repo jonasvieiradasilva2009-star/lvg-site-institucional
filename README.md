@@ -177,7 +177,7 @@ A logo é exibida pelo componente `src/components/brand/Logo.tsx`, que lê os ca
 
 ## Como configurar o domínio
 
-1. O domínio oficial (`https://www.lvgsistemas.com.br`) já está definido em `DEFAULT_SITE_URL`, em
+1. O domínio oficial (`https://lvgsistemas.com.br`) já está definido em `DEFAULT_SITE_URL`, em
    `src/config/site.ts`. Para usar outro endereço, altere esse valor ou defina a variável de ambiente
    **`VITE_SITE_URL`** (sem barra final):
    - localmente: copie `.env.example` para `.env` e ajuste;
@@ -261,7 +261,9 @@ npx wrangler pages deploy dist --project-name lvg-site
 
 - [x] WhatsApp, Instagram, área e horário de atendimento em `src/config/contact.ts`.
 - [ ] E-mail comercial em `src/config/contact.ts` (campo `email`).
-- [x] Domínio oficial (`https://www.lvgsistemas.com.br`) definido em `src/config/site.ts`.
-- [ ] Domínio conectado ao Worker na Cloudflare (*Settings → Domains & Routes → Add → Custom domain*).
+- [x] Domínio oficial (`https://lvgsistemas.com.br`) definido em `src/config/site.ts`.
+- [x] Domínio `lvgsistemas.com.br` conectado ao Worker na Cloudflare (*Settings → Domains & Routes → Custom domain*).
+- [ ] `www.lvgsistemas.com.br` redirecionando para `lvgsistemas.com.br`: registro DNS `AAAA www 100::` com proxy
+      ativado e a regra de redirecionamento "Redirect from WWW to root" (*Rules → Redirect Rules*).
 - [ ] Arquivos oficiais da logo e do favicon em alta resolução (opcional, mas recomendado).
 - [ ] Revisão final dos textos comerciais e do estágio de cada produto.
