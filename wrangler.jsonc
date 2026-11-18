@@ -11,5 +11,7 @@
     "html_handling": "drop-trailing-slash",
     // endereços inexistentes recebem dist/404.html com status 404
     "not_found_handling": "404-page"
-  }
+  },
+  // Necessário para as versões de teste (branches que não são a main), publicadas com `npx wrangler preview`.
+  "previews": {}
 }
