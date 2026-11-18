@@ -1,0 +1,205 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/sora';
+@import '@fontsource-variable/inter';
+
+/* ------------------------------------------------------------------
+ * Design tokens — LVG Sistemas e Automações
+ * Paleta oficial + variações de contraste (AA) derivadas dela.
+ * ------------------------------------------------------------------ */
+@theme {
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Sora Variable', 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+
+  /* Paleta oficial */
+  --color-petrol: #123c5a; /* Azul petróleo — principal */
+  --color-digital: #1e88e5; /* Azul digital — destaque */
+  --color-teal: #19b39b; /* Verde-teal — secundária */
+  --color-graphite: #2b2f33; /* Grafite */
+  --color-mist: #e9eef2; /* Cinza claro */
+
+  /* Variações de contraste */
+  --color-petrol-800: #0e3049;
+  --color-petrol-100: #dbe6ee;
+  --color-digital-300: #6cb2f2;
+  --color-digital-600: #1873cc; /* texto branco: 4.8:1 */
+  --color-digital-700: #1565c0; /* links sobre branco: 5.7:1 */
+  --color-digital-50: #eaf3fd;
+  --color-teal-300: #63d6c2;
+  --color-teal-700: #0b7a69; /* texto sobre branco */
+  --color-teal-50: #e6f7f4;
+
+  /* Superfícies escuras (azul-marinho profundo) */
+  --color-ink: #071a2b;
+  --color-ink-2: #0b2539;
+  --color-ink-3: #12334d;
+
+  /* Neutros */
+  --color-muted: #5b6670; /* texto secundário: 5.9:1 sobre branco */
+  --color-line: #dce3ea;
+  --color-surface: #f6f8fa;
+
+  --shadow-card: 0 1px 2px rgb(7 26 43 / 0.04), 0 8px 24px -12px rgb(7 26 43 / 0.12);
+  --shadow-card-hover: 0 1px 2px rgb(7 26 43 / 0.05), 0 22px 44px -20px rgb(7 26 43 / 0.28);
+  --shadow-glow: 0 0 0 1px rgb(255 255 255 / 0.06), 0 30px 80px -30px rgb(30 136 229 / 0.45);
+
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-float-slow: float 9s ease-in-out infinite;
+  --animate-dash: dash 1.6s linear infinite;
+  --animate-pulse-dot: pulse-dot 2.4s ease-in-out infinite;
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-8px);
+    }
+  }
+  @keyframes dash {
+    to {
+      stroke-dashoffset: -24;
+    }
+  }
+  @keyframes pulse-dot {
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.55;
+      transform: scale(0.85);
+    }
+  }
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    scroll-padding-top: 5.5rem;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+  body {
+    @apply bg-white font-sans text-graphite antialiased;
+    /* rede de segurança contra rolagem horizontal causada por efeitos decorativos */
+    overflow-x: clip;
+    font-feature-settings: 'cv11', 'ss01';
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display text-balance;
+    letter-spacing: -0.02em;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  ::selection {
+    background: rgb(30 136 229 / 0.2);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-digital);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  .dark-surface :focus-visible {
+    outline-color: var(--color-teal-300);
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-xs font-semibold tracking-[0.14em] uppercase;
+  }
+  /* Grade técnica sutil para fundos escuros */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, rgb(255 255 255 / 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 255 255 / 0.045) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+  .bg-grid-light {
+    background-image:
+      linear-gradient(to right, rgb(18 60 90 / 0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(18 60 90 / 0.06) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+  .mask-fade-b {
+    mask-image: linear-gradient(to bottom, black 40%, transparent);
+  }
+  .mask-radial {
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+  }
+  .text-gradient {
+    background: linear-gradient(100deg, #6cb2f2 0%, #63d6c2 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .glass-card {
+    @apply rounded-2xl border border-white/10 bg-white/[0.04] backdrop-blur-md;
+  }
+}
+
+/* Animações de entrada guiadas pela rolagem (progressive enhancement).
+ * Sem suporte ou com "reduzir movimento", o conteúdo aparece normalmente. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: reveal-up linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 55%;
+    }
+  }
+}
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes fade-out {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes sheet-in {
+  from {
+    transform: translateX(100%);
+  }
+}
+@keyframes sheet-out {
+  to {
+    transform: translateX(100%);
+  }
+}
