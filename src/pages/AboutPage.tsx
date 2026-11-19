@@ -178,7 +178,7 @@ export function AboutPage() {
           </div>
           <ol className="space-y-3 lg:col-span-6">
             {[
-              { label: 'Agora', text: 'Desenvolvimento das primeiras soluções SaaS: LVG Frotas e LVG Delivery.' },
+              { label: 'Agora', text: 'LVG Frotas disponível e LVG Delivery em desenvolvimento.' },
               { label: 'Em seguida', text: 'Estruturação da frente de automações empresariais e integrações.' },
               { label: 'Futuro', text: 'Novos sistemas para outros segmentos, sob a mesma marca LVG.' },
             ].map((item) => (

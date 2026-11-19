@@ -1,13 +1,20 @@
 import { ArrowRight } from 'lucide-react'
-import { Link } from 'react-router'
 import { Button } from '@/components/ui/button'
+import { SmartLink } from '@/components/ui/smart-link'
+
+interface CtaAction {
+  label: string
+  /** Rota interna ou endereço externo. */
+  to: string
+  newTab?: boolean
+}
 
 interface CtaBannerProps {
   eyebrow?: string
   title?: string
   description?: string
-  primary?: { label: string; to: string }
-  secondary?: { label: string; to: string }
+  primary?: CtaAction
+  secondary?: CtaAction
 }
 
 /** Chamada para ação de encerramento das páginas. */
@@ -40,13 +47,15 @@ export function CtaBanner({
             </div>
             <div className="flex flex-col gap-3 sm:flex-row lg:col-span-4 lg:flex-col lg:items-stretch">
               <Button asChild size="lg">
-                <Link to={primary.to}>
+                <SmartLink to={primary.to} newTab={primary.newTab}>
                   {primary.label}
                   <ArrowRight className="transition-transform group-hover/btn:translate-x-0.5" aria-hidden />
-                </Link>
+                </SmartLink>
               </Button>
               <Button asChild size="lg" variant="outline-light">
-                <Link to={secondary.to}>{secondary.label}</Link>
+                <SmartLink to={secondary.to} newTab={secondary.newTab}>
+                  {secondary.label}
+                </SmartLink>
               </Button>
             </div>
           </div>
