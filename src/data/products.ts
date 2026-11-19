@@ -28,7 +28,8 @@ export const products: Product[] = [
     name: 'LVG Frotas',
     category: 'Gestão de frotas',
     icon: Truck,
-    status: 'em-desenvolvimento',
+    status: 'disponivel',
+    appUrl: 'https://frotas.lvgsistemas.com.br',
     accent: {
       color: '#1E88E5',
       soft: '#EAF3FD',
@@ -141,7 +142,7 @@ export const products: Product[] = [
       {
         question: 'O LVG Frotas já está disponível?',
         answer:
-          'O sistema está em desenvolvimento. Fale com a LVG para acompanhar o lançamento e conhecer o produto assim que estiver disponível.',
+          'Sim. O LVG Frotas já está disponível e pode ser acessado em frotas.lvgsistemas.com.br. Se tiver dúvidas, fale com a LVG pelo WhatsApp.',
       },
       {
         question: 'O que é uma frota mista?',
@@ -156,7 +157,7 @@ export const products: Product[] = [
       {
         question: 'Preciso instalar algum programa?',
         answer:
-          'Não. O LVG Frotas está sendo desenvolvido no modelo SaaS, acessado pelo navegador, sem necessidade de instalação ou servidores próprios.',
+          'Não. O LVG Frotas funciona no modelo SaaS: é acessado pelo navegador, sem necessidade de instalação ou servidores próprios.',
       },
     ],
     seo: {

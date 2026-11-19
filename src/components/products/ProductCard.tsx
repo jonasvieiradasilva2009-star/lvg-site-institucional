@@ -1,4 +1,4 @@
-import { ArrowUpRight, Check } from 'lucide-react'
+import { ArrowUpRight, Check, LogIn } from 'lucide-react'
 import { Link } from 'react-router'
 import type { Product } from '@/types/product'
 import { cn } from '@/lib/utils'
@@ -80,7 +80,7 @@ export function ProductCard({ product, detailed = false, className }: ProductCar
           </div>
         )}
 
-        <div className="mt-auto pt-8">
+        <div className="mt-auto flex flex-wrap items-center justify-between gap-x-6 gap-y-3 pt-8">
           <span
             className="inline-flex items-center gap-1.5 text-sm font-semibold text-petrol transition-colors group-hover:text-digital-700"
             aria-hidden
@@ -88,6 +88,18 @@ export function ProductCard({ product, detailed = false, className }: ProductCar
             Conhecer o {product.name}
             <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </span>
+          {product.appUrl && (
+            // z-10 mantém este link clicável acima da área clicável do cartão.
+            <a
+              href={product.appUrl}
+              aria-label={`Acessar o sistema ${product.name}`}
+              className="relative z-10 inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+              style={{ background: product.accent.gradient }}
+            >
+              Acessar o sistema
+              <LogIn className="size-4" aria-hidden />
+            </a>
+          )}
         </div>
       </div>
     </article>

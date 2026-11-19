@@ -42,6 +42,11 @@ export interface Product {
   category: string
   icon: LucideIcon
   status: ProductStatus
+  /**
+   * Endereço do sistema em funcionamento (opcional).
+   * Quando definido, o site exibe "Acessar o sistema" e "Tirar dúvidas no WhatsApp".
+   */
+  appUrl?: string
   accent: ProductAccent
   /** Frase de impacto (hero da página do produto). */
   tagline: string

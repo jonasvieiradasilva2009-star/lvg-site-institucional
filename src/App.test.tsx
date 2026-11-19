@@ -50,6 +50,26 @@ describe('rotas', () => {
     expect(screen.getByRole('button', { name: 'LVG Frotas' })).toHaveAttribute('aria-pressed', 'true')
   })
 
+  it('o LVG Frotas leva ao sistema e ao WhatsApp', () => {
+    const { container } = renderAt('/solucoes/frotas')
+    const access = screen.getAllByRole('link', { name: /Acessar o LVG Frotas/ })
+    expect(access.length).toBeGreaterThan(0)
+    for (const link of access) expect(link).toHaveAttribute('href', 'https://frotas.lvgsistemas.com.br')
+    const whatsapp = container.querySelectorAll<HTMLAnchorElement>('main a[href^="https://wa.me/5569993539978"]')
+    expect(whatsapp.length).toBeGreaterThan(0)
+    expect(decodeURIComponent(whatsapp[0].href)).toContain('LVG Frotas')
+    expect(whatsapp[0]).toHaveAttribute('target', '_blank')
+    expect(screen.getAllByText('Disponível').length).toBeGreaterThan(0)
+  })
+
+  it('o catálogo exibe o acesso direto ao sistema', () => {
+    renderAt('/solucoes')
+    expect(screen.getByRole('link', { name: /Acessar o sistema LVG Frotas/ })).toHaveAttribute(
+      'href',
+      'https://frotas.lvgsistemas.com.br',
+    )
+  })
+
   it('produtos em desenvolvimento são identificados', () => {
     renderAt('/solucoes/delivery')
     expect(screen.getAllByText('Em desenvolvimento').length).toBeGreaterThan(0)

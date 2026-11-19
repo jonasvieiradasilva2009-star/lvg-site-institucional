@@ -1,4 +1,4 @@
-import { ArrowRight, Check, Info, X } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, Check, Info, MessageCircle, X } from 'lucide-react'
 import { Link, useParams } from 'react-router'
 import { ProductVisual } from '@/components/products/ProductVisual'
 import { StatusBadge } from '@/components/products/StatusBadge'
@@ -8,8 +8,10 @@ import { PageHero } from '@/components/sections/PageHero'
 import { Section, SectionHeading } from '@/components/sections/Section'
 import { Seo } from '@/components/seo/Seo'
 import { Button } from '@/components/ui/button'
+import { SmartLink } from '@/components/ui/smart-link'
 import { getProduct, productStatusMeta } from '@/data/products'
 import { contactHref } from '@/lib/interest'
+import { productQuestionsLink } from '@/lib/product-actions'
 import { cn } from '@/lib/utils'
 import type { Product } from '@/types/product'
 import { NotFoundPage } from './NotFoundPage'
@@ -25,6 +27,9 @@ export function ProductPage({ product }: { product: Product }) {
   const status = productStatusMeta[product.status]
   const Icon = product.icon
   const ctaTo = contactHref(product.slug)
+  const questions = productQuestionsLink(product)
+  // Produto com sistema em funcionamento: acesso direto + dúvidas pelo WhatsApp.
+  const appAction = product.appUrl ? { label: `Acessar o ${product.name}`, to: product.appUrl } : null
   const featureCount = product.features.length
 
   return (
@@ -55,17 +60,34 @@ export function ProductPage({ product }: { product: Product }) {
         title={product.tagline}
         description={product.description}
         actions={
-          <>
-            <Button asChild size="lg">
-              <Link to={ctaTo}>
-                {status.cta}
-                <ArrowRight aria-hidden />
-              </Link>
-            </Button>
-            <Button asChild size="lg" variant="outline-light">
-              <a href="#funcionalidades">Ver funcionalidades</a>
-            </Button>
-          </>
+          appAction ? (
+            <>
+              <Button asChild size="lg">
+                <SmartLink to={appAction.to}>
+                  {appAction.label}
+                  <ArrowUpRight aria-hidden />
+                </SmartLink>
+              </Button>
+              <Button asChild size="lg" variant="outline-light">
+                <SmartLink to={questions.to} newTab={questions.newTab}>
+                  <MessageCircle aria-hidden />
+                  {questions.label}
+                </SmartLink>
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button asChild size="lg">
+                <Link to={ctaTo}>
+                  {status.cta}
+                  <ArrowRight aria-hidden />
+                </Link>
+              </Button>
+              <Button asChild size="lg" variant="outline-light">
+                <a href="#funcionalidades">Ver funcionalidades</a>
+              </Button>
+            </>
+          )
         }
         aside={<ProductVisual product={product} />}
       />
@@ -252,10 +274,20 @@ export function ProductPage({ product }: { product: Product }) {
 
       <CtaBanner
         eyebrow={product.name}
-        title={product.status === 'disponivel' ? `Leve o ${product.name} para a sua empresa.` : `Acompanhe o lançamento do ${product.name}.`}
-        description="Fale com a LVG, conte como funciona a sua operação e receba informações sobre a solução."
-        primary={{ label: status.cta, to: ctaTo }}
-        secondary={{ label: 'Ver outras soluções', to: '/solucoes' }}
+        title={
+          appAction
+            ? `Comece a usar o ${product.name} agora.`
+            : product.status === 'disponivel'
+              ? `Leve o ${product.name} para a sua empresa.`
+              : `Acompanhe o lançamento do ${product.name}.`
+        }
+        description={
+          appAction
+            ? `Acesse o sistema ou, se preferir, tire suas dúvidas com a LVG${questions.newTab ? ' pelo WhatsApp' : ''} antes de começar.`
+            : 'Fale com a LVG, conte como funciona a sua operação e receba informações sobre a solução.'
+        }
+        primary={appAction ?? { label: status.cta, to: ctaTo }}
+        secondary={appAction ? questions : { label: 'Ver outras soluções', to: '/solucoes' }}
       />
     </>
   )
